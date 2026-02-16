@@ -8,9 +8,9 @@ async def create_post(body: str, async_client: AsyncClient) -> dict:
     response = await async_client.post('/post', json={"body": body})
     return response.json()
 
-async def create_comment(body: str,postId: int, async_client: AsyncClient) -> dict:
+async def create_comment(body: str,post_id: int, async_client: AsyncClient) -> dict:
     
-    response = await async_client.post('/comment', json={"body": body, "postId": postId})
+    response = await async_client.post('/comment', json={"body": body, "post_id": post_id})
     return response.json()
 
 @pytest.fixture()
@@ -32,7 +32,7 @@ async def test_create_post(async_client: AsyncClient):
     })
 
     assert response.status_code == 201
-    assert { "id": 0, "body": body}.items() <= response.json().items()
+    assert { "id": 1, "body": body}.items() <= response.json().items()
 
 @pytest.mark.anyio
 async def test_create_comment(async_client: AsyncClient, created_post: str):
@@ -40,14 +40,14 @@ async def test_create_comment(async_client: AsyncClient, created_post: str):
     body = "Test Post"
     response = await async_client.post('/comment', json={
          "body": body,
-         "postId": created_post['id'] 
+         "post_id": created_post['id'] 
         })
 
     assert response.status_code == 201
     assert { 
-          "id": 0, 
+          "id": 1, 
           "body": body,
-          "postId": created_post['id']
+          "post_id": created_post['id']
 
           }.items() <= response.json().items()
 

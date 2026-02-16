@@ -1,4 +1,10 @@
 fastapi
-uvicorn
+uvicorn[standard]
 sqlalchemy
 pydantic
+pytest
+ruff
+black
+isort
+pytest
+httpx

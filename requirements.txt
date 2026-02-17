@@ -1,10 +1,15 @@
 fastapi
 uvicorn[standard]
 sqlalchemy
+databases[aiosqlite]
 pydantic
 pytest
 ruff
 black
 isort
 pytest
+anyio
 httpx
+python-dotenv
+rich
+asgi-correlation-id

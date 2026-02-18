@@ -1,15 +1,14 @@
 ## Python concepts
 
----
 
 **Decorator**
 
 decorators in python extend the functionality of a function
 
+---
 
 ## REST 
 
----
 
 - is an architectural constraint
 
@@ -59,11 +58,15 @@ HTTPX is a modern, fully-featured  HTTP client library for python3 that provides
 
 synchronous and asnycronouse APIs
 
+---
+
 #### what is a ficture in pytest 
 
 in pytest, fixtures are functions used to provide a defined , reliable and consistent
 
 environment(or "context") for test to run.
+
+---
 
 #### what is a generator
 
@@ -72,6 +75,10 @@ In Python, a generator is a special type of function that returns an iterator, a
 the ***yield*** keyword is used within the function to produce values one at a time,
 
 pausing execution and saving its state each time. 
+
+---
+
+## Fast API Authentication
 
 
 

@@ -3,9 +3,14 @@ import pytest
 from api import security
 
 
-def test_password_hashes():
+@pytest.mark.anyio
+async def test_password_hashes():
     password = "1234"
-    assert security.verify_password(password, security.get_password_hash(password))
+    assert security.verify_password(
+        password,
+        security.get_password_hash(password)
+    )
+
 
 @pytest.mark.anyio
 async def test_get_user(registered_user: dict):

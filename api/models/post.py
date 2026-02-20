@@ -7,7 +7,7 @@ class UserPostIn(BaseModel):
 
 class UserPost(UserPostIn):
     id: int
-
+    user_id: int
     model_config = {
        "from_attributes": True
     }
@@ -19,7 +19,7 @@ class CommentIn(BaseModel):
 
 class Comment(CommentIn):
     id: int
-
+    user_id: int
     model_config = {
        "from_attributes": True
     }

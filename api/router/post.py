@@ -1,4 +1,5 @@
 import logging
+from typing import Annotated
 
 from fastapi import APIRouter, HTTPException
 
@@ -10,6 +11,8 @@ from api.models.post import (
     UserPostIn,
     UserPostWithComment,
 )
+from api.models.user import User
+from api.security import get_current_user
 
 router = APIRouter()
 logger = logging.getLogger(__name__)
@@ -19,9 +22,10 @@ async def find_post(post_id: int):
     return await database.fetch_one(query)
 
 @router.post('/post', response_model=UserPost, status_code=201)
-async def createPost(post: UserPostIn):
-
-    data = post.model_dump()
+async def createPost(post: UserPostIn, current_user: Annotated[User, get_current_user ]):
+       
+    
+    data = {**post.model_dump(), "user_id": current_user.id}
     query = post_table.insert().values(data)
     last_record_id = await database.execute(query)
     return  { **data, "id":last_record_id}
@@ -38,16 +42,16 @@ async def get_all_posts():
 
 
 @router.post('/comment', response_model=Comment, status_code=201)
-async def createComment(comment:CommentIn ):
-
+async def createComment(comment:CommentIn, current_user: Annotated[User, get_current_user]):
+    
     post = await find_post(comment.post_id)
-
+    
     if not post:
 
         raise HTTPException(status_code=404, detail='post not found')
 
 
-    data = comment.model_dump()
+    data = {**comment.model_dump(), "user_id": current_user.id }
     query = comment_table.insert().values(data)
     last_record_id = await database.execute(query)
     

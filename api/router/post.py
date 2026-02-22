@@ -21,7 +21,7 @@ async def find_post(post_id: int):
     query = post_table.select().where(post_table.c.id == post_id)
     return await database.fetch_one(query)
 
-@router.post('/post', response_model=UserPost, status_code=201)
+@router.post('/', response_model=UserPost, status_code=201)
 async def createPost(post: UserPostIn, current_user: Annotated[User, get_current_user ]):
        
     
@@ -30,7 +30,7 @@ async def createPost(post: UserPostIn, current_user: Annotated[User, get_current
     last_record_id = await database.execute(query)
     return  { **data, "id":last_record_id}
 
-@router.get('/post', response_model=list[UserPost])
+@router.get('/', response_model=list[UserPost])
 async def get_all_posts():
 
     logger.info("Getting all posts")
@@ -57,12 +57,12 @@ async def createComment(comment:CommentIn, current_user: Annotated[User, get_cur
     
     return { **data, "id": last_record_id}
 
-@router.get('/post/{post_id}/comment', response_model=list[Comment])
+@router.get('/{post_id}/comment', response_model=list[Comment])
 async def get_all_post_comments(post_id: int):
     query = comment_table.select().where(comment_table.c.post_id == post_id)
     return await database.fetch_all(query)
    
-@router.get("/post/{post_id}", response_model=UserPostWithComment)
+@router.get("/{post_id}", response_model=UserPostWithComment)
 async def get_post_with_comments(post_id: int):
     post = await find_post(post_id)
 

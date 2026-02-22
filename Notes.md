@@ -125,6 +125,8 @@ imported.
 
 - An extremely fast and popular all-in-one  linter and code formatter for python.
 
+**Black** - opinionated python code formatter
+
 
 
 

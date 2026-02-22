@@ -7,6 +7,37 @@ decorators in python extend the functionality of a function
 
 ---
 
+**__init__** in the root folder , it enables us to write imports like
+
+from api.models import posts
+
+**pyenv**
+
+- a command-line tool for managing multiple Python versions independently of your system
+
+ installation.
+
+ **Difference betwwen venv and pyenv**
+
+ ***pyenv*** - allows us to manage multiple python versions and virtual environments, 
+ 
+ ***venv*** allows you to create virtual environments based on a single python version.
+
+
+## API
+
+- an interface for programming an application
+
+- set of rules and protocols
+
+- allows different software applications to communicate , share data, or share 
+
+  functionality
+
+- it helps developers to integrate third party services , such as payment systems , maps 
+
+or data feeds 
+
 ## REST 
 
 
@@ -78,7 +109,22 @@ pausing execution and saving its state each time.
 
 ---
 
+### private variable in python
+
+- is a variable which can't be accessed by another file if the file containing it is 
+
+imported.
+
+- they are created by preceding _ in front of it
+
 ## Fast API Authentication
+
+## packages 
+
+**ruff** 
+
+- An extremely fast and popular all-in-one  linter and code formatter for python.
+
 
 
 

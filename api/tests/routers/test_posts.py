@@ -26,6 +26,15 @@ async def create_comment(body: str,post_id: int, async_client: AsyncClient, logg
         )
     return response.json()
 
+async def like_post(post_id: int, async_client: AsyncClient, logged_in_token: str) -> dict:
+    
+    response = await async_client.post(
+        '/like', 
+        json={"post_id": post_id},
+        headers={ "Authorization": f"Bearer {logged_in_token}" }
+)
+    return response.json()
+
 @pytest.fixture()
 async def created_post(async_client: AsyncClient, logged_in_token: str):
     return await create_post('Test Post', async_client, logged_in_token)
@@ -50,6 +59,21 @@ async def test_create_post(async_client: AsyncClient, registered_user: dict, log
 
     assert response.status_code == 201
     assert { "id": 1, "body": body, 'user_id':  registered_user['id']}.items() <= response.json().items()
+
+@pytest.mark.anyio
+async def test_like_post(async_client: AsyncClient, created_post: dict, logged_in_token: str, registered_user: dict):
+    response = await like_post(
+        created_post['id'], 
+        async_client, 
+        logged_in_token
+    )
+
+    assert response.status_code == 201
+    assert {
+        "id": 1,
+        "post_id": created_post['id'],
+        "user_id": registered_user['id']
+    }.items() <= response.json().items()
 
 @pytest.mark.anyio
 async def test_create_post_expired_token(
@@ -132,7 +156,7 @@ async def test_get_post_with_comments(
     response = await async_client.get(f"/post/{created_post['id']}")
 
     assert response.status_code == 200
-    assert response.json() == {"post": created_post, "comment": [created_comment]}
+    assert response.json() == {"post": {**created_post, "likes": 0}, "comment": [created_comment]}
 
 
 @pytest.mark.anyio

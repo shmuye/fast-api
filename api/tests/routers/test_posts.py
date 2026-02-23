@@ -131,6 +131,45 @@ async def test_get_all_posts(async_client: AsyncClient, created_post):
     assert response.status_code == 200
     assert response.json() == [created_post]
 
+
+@pytest.mark.anyio
+@pytest.mark.parametrize("sorting, expected_order", [
+    ("newest", [2, 1]),  # Assuming the second created post has id 2 and the first has id 1
+    ("oldest", [1, 2])   # Assuming the first created post has more likes than the second
+])
+async def test_get_all_posts_sorted(
+    async_client: AsyncClient, 
+    logged_in_token,
+    sorting: str,
+    expected_order: list[int]
+    ):
+    # Create 3 posts with some delay to ensure different timestamps
+    await create_post('First Post', async_client, logged_in_token)
+    await create_post('Second Post', async_client, logged_in_token)
+
+    response = await async_client.get('/post', params={"sorting": sorting})
+
+    assert response.status_code == 200
+    actual_order = [post['id'] for post in response.json()]
+    assert actual_order == expected_order
+
+
+async def test_get_all_posts_sorted_likes(
+    async_client: AsyncClient, 
+    logged_in_token,
+):
+    # Create 3 posts with some delay to ensure different timestamps
+    await create_post('First Post', async_client, logged_in_token)
+    await create_post('Second Post', async_client, logged_in_token)
+    await like_post(1, async_client, logged_in_token)
+    response = await async_client.get('/post', params={"sorting": "most_liked"})
+
+    assert response.status_code == 200
+    expected_order = [1, 2]  # Assuming the first created post has more likes than the second
+    actual_order = [post['id'] for post in response.json()]
+    assert actual_order == expected_order
+           
+
 @pytest.mark.anyio
 async def test_get_all_post_comments(
     async_client: AsyncClient, created_post: dict, created_comment: dict

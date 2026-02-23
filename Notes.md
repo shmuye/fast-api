@@ -128,5 +128,8 @@ imported.
 **Black** - opinionated python code formatter
 
 
+**sqlalchemy Metadata**
+
+- a container that stores information about a database schema
 
 

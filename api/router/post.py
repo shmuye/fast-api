@@ -1,4 +1,5 @@
 import logging
+from enum import Enum
 from typing import Annotated
 
 import sqlalchemy
@@ -37,11 +38,24 @@ async def createPost(post: UserPostIn, current_user: Annotated[User, get_current
     last_record_id = await database.execute(query)
     return  { **data, "id":last_record_id}
 
+class PostSorting(str, Enum):
+    newest = "new"
+    oldest = "old"
+    most_liked = "most_liked"
+
 @router.get('/', response_model=list[UserPost])
-async def get_all_posts():
+async def get_all_posts(sorting: PostSorting = PostSorting.newest):
 
     logger.info("Getting all posts")
-    query = select_post_and_likes.order_by(sqlalchemy.desc('likes'))
+
+    if sorting == PostSorting.newest:
+        query = post_table.select().order_by(post_table.c.id.desc())
+
+    elif sorting == PostSorting.oldest:
+        query = post_table.select().order_by(post_table.c.id.asc())
+
+    elif sorting == PostSorting.most_liked:
+        query = select_post_and_likes.order_by(sqlalchemy.desc('likes'))
     
     logger.debug(query)
 
@@ -92,7 +106,14 @@ async def like_post(like: PostLikeIn, current_user: Annotated[User, Depends(get_
     
     if not post:
         raise HTTPException(status_code=404, detail='post not found')
-
+    if post.likes and post.likes > 0 and like.user_id == current_user.id:
+        logger.info('disliking post')
+        query = like_table.delete().where(
+            (like_table.c.post_id == like.post_id) &
+            (like_table.c.user_id == current_user.id)
+        )
+        await database.execute(query)
+        return {"message": "Post disliked"}
     data = {**like.model_dump(), "user_id": current_user.id }
     query = like_table.insert().values(data)
 

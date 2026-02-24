@@ -106,7 +106,12 @@ async def like_post(like: PostLikeIn, current_user: Annotated[User, Depends(get_
     
     if not post:
         raise HTTPException(status_code=404, detail='post not found')
-    if post.likes and post.likes > 0 and like.user_id == current_user.id:
+    existing_like_query = like_table.select().where(
+        (like_table.c.post_id == like.post_id) &
+        (like_table.c.user_id == current_user.id)
+    )
+    existing_like = await database.fetch_one(existing_like_query)
+    if existing_like:
         logger.info('disliking post')
         query = like_table.delete().where(
             (like_table.c.post_id == like.post_id) &

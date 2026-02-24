@@ -21,7 +21,12 @@ credentials_exception = HTTPException(
 )
 
 def access_token_expire_minutes()-> int:
-    return 30
+    return 30 
+
+def confirm_token_expire_minutes()-> int:
+    return 1440 # 24 hours
+
+
 def create_access_token(email: str):
     logger.debug("creating access token", extra={"email": email})
     
@@ -32,7 +37,25 @@ def create_access_token(email: str):
 
     jwt_data = {
         "sub": email,
-        "exp": expire
+        "exp": expire,
+        "type": "access"
+    }
+
+    encoded_jwt = jwt.encode(jwt_data, key=SECRET_KEY, algorithm=ALGORITHM)
+    return encoded_jwt
+
+def create_confirmation_token(email: str):
+    logger.debug("creating access token", extra={"email": email})
+    
+    expire = datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(
+        minutes=confirm_token_expire_minutes()
+    )
+
+
+    jwt_data = {
+        "sub": email,
+        "exp": expire,
+        "type": "confirmation"
     }
 
     encoded_jwt = jwt.encode(jwt_data, key=SECRET_KEY, algorithm=ALGORITHM)

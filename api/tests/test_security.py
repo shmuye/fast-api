@@ -23,6 +23,16 @@ def test_create_confirmation_token():
         token, security.SECRET_KEY, algorithms=[security.ALGORITHM]
     ).items()
 
+def test_get_subject_for_token_type_valid_confirmation():
+    email = "test@gmail.com"
+    token = security.create_confirmation_token(email)
+    assert security.get_subject_for_token_type(token, "confirmation") == email
+
+def test_get_subject_for_token_type_valid_access():
+    email = "test@gmail.com"
+    token = security.create_confirmation_token(email)
+    assert security.get_subject_for_token_type(token, "access") == email
+
 @pytest.mark.anyio
 async def test_password_hashes():
     password = "1234"

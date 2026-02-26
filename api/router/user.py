@@ -8,6 +8,7 @@ from api.security import (
     authenticate_user,
     create_access_token,
     get_password_hash,
+    get_subject_for_token_type,
     get_user,
 )
 
@@ -35,3 +36,12 @@ async def login(user: UserIn):
     user = await authenticate_user(user.email, user.password)
     access_token = create_access_token(user.email)
     return {"accessToken": access_token, "token_type": "bearer"}
+
+@router.get('/confirm/{token}')
+async def confirm(token: str):
+    email = get_subject_for_token_type(token, "confirmation")
+    query = user_table.update().where(user_table.c.email == email).values(confirmed=True)
+
+    logger.debug(query)
+    await database.execute(query)
+    return {"detail": "Email confirmed"}

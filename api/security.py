@@ -26,7 +26,8 @@ def access_token_expire_minutes()-> int:
     return 30 
 
 def confirm_token_expire_minutes()-> int:
-    return 1440 # 24 hours
+    return 1440 
+
 
 
 def create_access_token(email: str):
@@ -47,19 +48,16 @@ def create_access_token(email: str):
     return encoded_jwt
 
 def create_confirmation_token(email: str):
-    logger.debug("creating access token", extra={"email": email})
-    
-    expire = datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(
+    logger.debug("creating confirmation token", extra={"email": email})
+
+    expire = datetime.datetime.now((datetime.timezone.utc)) + datetime.timedelta(
         minutes=confirm_token_expire_minutes()
     )
-
-
     jwt_data = {
         "sub": email,
         "exp": expire,
         "type": "confirmation"
     }
-
     encoded_jwt = jwt.encode(jwt_data, key=SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
 
@@ -78,7 +76,7 @@ def get_subject_for_token_type(token: str, token_type: Literal["access", "confir
         raise create_credentials_exception("Token is missing 'sub' field")
     token_type = payload.get('type')
 
-    if type is None or token_type != type:
+    if type is None or token_type is not type:
         raise create_credentials_exception(f"Token is not of type {type}")
         
     return email

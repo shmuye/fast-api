@@ -107,6 +107,8 @@ async def authenticate_user(email: str, password: str):
         raise create_credentials_exception("User not found")
     if not verify_password(password, user.password):
         raise create_credentials_exception("Incorrect email or password")
+    if(not user.Confirmed):
+        raise create_credentials_exception("user has not confirmed email")
     return user
 
 async def get_current_user(token: Annotated[str, Depends(oauth2_scheme())]):

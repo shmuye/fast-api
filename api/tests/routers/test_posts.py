@@ -46,7 +46,7 @@ async def created_comment(async_client: AsyncClient, created_post: dict, logged_
 
 
 @pytest.mark.anyio
-async def test_create_post(async_client: AsyncClient, registered_user: dict, logged_in_token: str):
+async def test_create_post(async_client: AsyncClient, confirmed_user: dict, logged_in_token: str):
 
     body = "Test Post"
     response = await async_client.post(
@@ -58,7 +58,7 @@ async def test_create_post(async_client: AsyncClient, registered_user: dict, log
         )
 
     assert response.status_code == 201
-    assert { "id": 1, "body": body, 'user_id':  registered_user['id']}.items() <= response.json().items()
+    assert { "id": 1, "body": body, 'user_id': confirmed_user['id']}.items() <= response.json().items()
 
 @pytest.mark.anyio
 async def test_like_post(async_client: AsyncClient, created_post: dict, logged_in_token: str, registered_user: dict):
@@ -77,10 +77,10 @@ async def test_like_post(async_client: AsyncClient, created_post: dict, logged_i
 
 @pytest.mark.anyio
 async def test_create_post_expired_token(
-    async_client: AsyncClient, registered_user, mocker
+    async_client: AsyncClient, confirmed_user, mocker
 ):
     mocker.patch("api.security.access_token_expire_minutes", return_value=-1)
-    token = security.create_access_token(registered_user['email'])
+    token = security.create_access_token(confirmed_user['email'])
 
     response = await async_client.post(
         '/post', 
@@ -95,7 +95,7 @@ async def test_create_post_expired_token(
 
 
 @pytest.mark.anyio
-async def test_create_comment(async_client: AsyncClient, registered_user: dict, created_post: str):
+async def test_create_comment(async_client: AsyncClient, confirmed_user: dict, created_post: str):
 
     body = "Test Post"
     response = await async_client.post('/comment', json={
@@ -108,7 +108,7 @@ async def test_create_comment(async_client: AsyncClient, registered_user: dict, 
           "id": 1, 
           "body": body,
           "post_id": created_post['id'],
-          "user_id": registered_user['id']
+          "user_id": confirmed_user['id']
 
           }.items() <= response.json().items()
 

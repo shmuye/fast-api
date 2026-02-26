@@ -1,4 +1,5 @@
 import pytest
+from fastapi import Request
 from httpx import AsyncClient
 
 
@@ -12,6 +13,16 @@ async def test_register_user(async_client: AsyncClient):
     response = await register_user(async_client, "test@example.com","1234")
     assert response.status_code == 201
     assert "User created" in response.json()['detail']
+
+@pytest.mark.anyio
+async def test_confirm_user(async_client: AsyncClient, mocker):
+    spy = mocker.spy(Request, "url_for")
+    response = await register_user(async_client, "test@exmaple.com","1234")
+    confirmation_url = str(spy.spy_return)
+    response = await async_client.get(confirmation_url)
+    assert response.status_code == 200
+    assert "Email confirmed" in response.json()['detail']
+
 
 @pytest.mark.anyio
 async def test_register_existing_user(async_client: AsyncClient, registered_user):

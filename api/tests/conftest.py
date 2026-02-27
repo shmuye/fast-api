@@ -1,9 +1,10 @@
 import os
 from typing import AsyncGenerator, Generator
+from unittest.mock import AsyncMock, Mock
 
 import pytest
 from fastapi.testclient import TestClient
-from httpx import ASGITransport, AsyncClient
+from httpx import ASGITransport, AsyncClient, Request, Response
 
 os.environ['ENV_STATE'] = "test"
 from api.database import database, user_table # noqa = E042
@@ -50,4 +51,11 @@ async def confirmed_user(registered_user: dict) -> dict:
 async def logged_in_token(async_client: AsyncClient, confirmed_user: dict) -> str:
     response = await async_client.post('/token', json=confirmed_user)
     return response.json()['access_token']
-    
+
+@pytest.fixture(autouse=True)
+def mock_httpx_client(mocker):
+    mocker_client = mocker.patch('api.tasks.httpx.AsyncClient')
+    mocked_async_client = Mock()
+    response = Response(status_code=200, content="", request=Request("Post", "//"))
+    mocked_async_client.post = AsyncMock(return_value = response)
+    mocker_client.return_value.__aenter__.return_value = mocked_async_client

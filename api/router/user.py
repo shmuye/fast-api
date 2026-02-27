@@ -12,6 +12,7 @@ from api.security import (
     get_subject_for_token_type,
     get_user,
 )
+from api.tasks import send_registeration_email
 
 router = APIRouter()
 logger = logging.getLogger(__name__)
@@ -29,11 +30,12 @@ async def register(user: UserIn, request: Request):
     logger.debug(query)
 
     await database.execute(query)
+    await send_registeration_email(
+        user.email,
+        confirmation_url= request.url_for('confirm_email', token=create_confirmation_token(user.email))
+    )
 
-    return { 
-        "detail": "Please Confirm your email", 
-        "confirmation_url": request.url_for('confirm_email', token=create_confirmation_token(user.email))
-        }
+    return { "detail": "Please Confirm your email"}
 
 @router.post('/token')
 async def login(user: UserIn):

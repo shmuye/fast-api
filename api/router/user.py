@@ -1,6 +1,6 @@
 import logging
 
-from fastapi import APIRouter, HTTPException, Request
+from fastapi import APIRouter, BackgroundTasks, HTTPException, Request
 
 from api.database import database, user_table
 from api.models.user import UserIn
@@ -18,7 +18,7 @@ router = APIRouter()
 logger = logging.getLogger(__name__)
 
 @router.post('/register', status_code=201)
-async def register(user: UserIn, request: Request):
+async def register(user: UserIn, background_task: BackgroundTasks, request: Request):
     if await get_user(user.email):
         raise HTTPException (
             status_code=400,
@@ -30,11 +30,11 @@ async def register(user: UserIn, request: Request):
     logger.debug(query)
 
     await database.execute(query)
-    await send_registeration_email(
+    background_task.add_task(
+        send_registeration_email,
         user.email,
         confirmation_url= request.url_for('confirm_email', token=create_confirmation_token(user.email))
     )
-
     return { "detail": "Please Confirm your email"}
 
 @router.post('/token')

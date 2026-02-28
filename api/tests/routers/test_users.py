@@ -1,5 +1,5 @@
 import pytest
-from fastapi import tasks
+from fastapi import BackgroundTasks
 from httpx import AsyncClient
 
 
@@ -16,7 +16,7 @@ async def test_register_user(async_client: AsyncClient):
 
 @pytest.mark.anyio
 async def test_confirm_user(async_client: AsyncClient, mocker):
-    spy = mocker.spy(tasks, "send_registration_email")
+    spy = mocker.spy(BackgroundTasks, "add_task")
     response = await register_user(async_client, "test@exmaple.com","1234")
     confirmation_url = str(spy.call_args[1]['confirmation_url'])
     response = await async_client.get(confirmation_url)

@@ -75,7 +75,9 @@ or data feeds
 
 #### what does hypermedia-driven mean
 
-if a resource is related to another resource, there should be an actual link in the response which allows the client to "find" the related resources
+if a resource is related to another resource, there should be an actual link in the
+ 
+response which allows the client to "find" the related resources
 
 #### what is BaseModel from pydantic
 
@@ -127,9 +129,29 @@ imported.
 
 **Black** - opinionated python code formatter
 
+**isort**
+
+- is a Python utility and library that automatically sorts and organizes import
+
+statements into a consistent, configurable order
+
 
 **sqlalchemy Metadata**
 
 - a container that stores information about a database schema
+
+**conftest.py file**
+
+- The conftest.py file in pytest serves as a local, per-directory plugin to share code
+
+ and configurations, primarily fixtures, across multiple test files without explicit 
+ 
+ imports.
+
+**TestClient**
+
+- allows you to simulate HTTP requests to your application without running a live server.
+
+ It is the recommended way to test your endpoints and is
 
 

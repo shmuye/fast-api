@@ -7,6 +7,7 @@ from fastapi.testclient import TestClient
 from httpx import ASGITransport, AsyncClient, Request, Response
 
 os.environ['ENV_STATE'] = "test"
+
 from api.database import database, user_table # noqa = E042
 from api.main import app # noqa = E402
 

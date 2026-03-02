@@ -25,10 +25,11 @@ class DevConfig(GlobalConfig):
 
 
 class TestConfig(GlobalConfig):
-    DATABASE_URL: str = 'sqlite:///test.db' 
-    DB_FORCE_ROLL_BACK: bool= True
+    DATABASE_URL = 'sqlite:///test.db' 
+    DB_FORCE_ROLL_BACK = True
     model_config = {
-        "env_prefix": "TEST_"
+        "env_prefix": "TEST_",
+        
     }
 
 class ProdConfig(GlobalConfig):

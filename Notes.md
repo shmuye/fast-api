@@ -135,10 +135,20 @@ imported.
 
 statements into a consistent, configurable order
 
+**encode/databases**
+
+- enables async support
+
+- sqlalchemy core integration
+
 
 **sqlalchemy Metadata**
 
 - a container that stores information about a database schema
+
+**lru_cash**
+
+- python decorator that memoizes functions
 
 **conftest.py file**
 

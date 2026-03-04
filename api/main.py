@@ -27,7 +27,7 @@ app.include_router(post_router, prefix='/post')
 app.include_router(user_router)
 
 @app.exception_handler(HTTPException)
-async def http_exception_handle_loggin(request, exc):
+async def http_exception_handle_logging(request, exc):
     logger.error(f"HTTPException: {exc.status_code} {exc.detail}")
     return await http_exception_handler(request, exc)
 

@@ -25,8 +25,8 @@ class DevConfig(GlobalConfig):
 
 
 class TestConfig(GlobalConfig):
-    DATABASE_URL = 'sqlite:///test.db' 
-    DB_FORCE_ROLL_BACK = True
+    DATABASE_URL: Optional[str] = 'sqlite:///test.db' 
+    DB_FORCE_ROLL_BACK: bool = True
     model_config = {
         "env_prefix": "TEST_",
         

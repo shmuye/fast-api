@@ -74,9 +74,9 @@ def get_subject_for_token_type(token: str, token_type: Literal["access", "confir
     email = payload.get('sub')
     if email is None:
         raise create_credentials_exception("Token is missing 'sub' field")
-    token_type = payload.get('type')
+    payload_type = payload.get('type')
 
-    if type is None or token_type is not type:
+    if payload_type is None or token_type != payload_type:
         raise create_credentials_exception(f"Token is not of type {type}")
         
     return email
@@ -111,7 +111,7 @@ async def authenticate_user(email: str, password: str):
         raise create_credentials_exception("user has not confirmed email")
     return user
 
-async def get_current_user(token: Annotated[str, Depends(oauth2_scheme())]):
+async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
     email = get_subject_for_token_type(token, "access")
     user = await get_user(email=email)
     if not user:

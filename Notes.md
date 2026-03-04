@@ -119,6 +119,24 @@ imported.
 
 - they are created by preceding _ in front of it
 
+## Logging
+
+***loggers***
+
+- schedules log information for output
+
+***handlers***
+
+- send the log information to a destination
+
+***formatters***
+
+- determine how the log will be displayed
+
+***filters***
+
+- are you used to reject log records or to modify them
+
 ## Fast API Authentication
 
 ## packages 

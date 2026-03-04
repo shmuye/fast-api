@@ -60,7 +60,7 @@ def configure_logging()-> None:
                     "maxBytes": 1024 * 1024, #5MB
                     "backupCount": 5,
                     "encoding": "utf8",
-                    "filters": ['correlation_id']
+                    "filters": ['correlation_id'],
                 }
             },
             "loggers": {

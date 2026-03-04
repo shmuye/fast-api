@@ -27,3 +27,10 @@ FROM posts
 {"asctime": "2026-02-17T22:56:43", "msecs": 352.0, "levelname": "INFO", "correlation_id": "-", "name": "api.main", "lineno": 18, "message": "Hello world"}
 {"asctime": "2026-02-17T22:56:43", "msecs": 354.0, "levelname": "INFO", "correlation_id": "-", "name": "uvicorn.error", "lineno": 62, "message": "Application startup complete."}
 {"asctime": "2026-02-17T22:56:43", "msecs": 356.0, "levelname": "INFO", "correlation_id": "-", "name": "uvicorn.error", "lineno": 216, "message": "Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)", "color_message": "Uvicorn running on \u001b[1m%s://%s:%d\u001b[0m (Press CTRL+C to quit)"}
+{"asctime": "2026-03-04T20:16:34", "msecs": 63.0, "levelname": "INFO", "correlation_id": "-", "name": "api.main", "lineno": 19, "message": "Hello world"}
+{"asctime": "2026-03-04T20:16:34", "msecs": 66.0, "levelname": "INFO", "correlation_id": "-", "name": "uvicorn.error", "lineno": 62, "message": "Application startup complete."}
+{"asctime": "2026-03-04T20:16:34", "msecs": 68.0, "levelname": "INFO", "correlation_id": "-", "name": "uvicorn.error", "lineno": 216, "message": "Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)", "color_message": "Uvicorn running on \u001b[1m%s://%s:%d\u001b[0m (Press CTRL+C to quit)"}
+{"asctime": "2026-03-04T20:16:50", "msecs": 635.0, "levelname": "INFO", "correlation_id": "-", "name": "uvicorn.error", "lineno": 264, "message": "Shutting down"}
+{"asctime": "2026-03-04T20:16:50", "msecs": 739.0, "levelname": "INFO", "correlation_id": "-", "name": "uvicorn.error", "lineno": 67, "message": "Waiting for application shutdown."}
+{"asctime": "2026-03-04T20:16:50", "msecs": 742.0, "levelname": "INFO", "correlation_id": "-", "name": "uvicorn.error", "lineno": 76, "message": "Application shutdown complete."}
+{"asctime": "2026-03-04T20:16:50", "msecs": 746.0, "levelname": "INFO", "correlation_id": "-", "name": "uvicorn.error", "lineno": 94, "message": "Finished server process [12841]", "color_message": "Finished server process [\u001b[36m%d\u001b[0m]"}

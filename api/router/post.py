@@ -68,7 +68,7 @@ async def createComment(comment:CommentIn, current_user: Annotated[User, get_cur
     post = await find_post(comment.post_id)
     
     if not post:
-
+        
         raise HTTPException(status_code=404, detail='post not found')
 
 

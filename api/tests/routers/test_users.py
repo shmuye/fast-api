@@ -43,7 +43,7 @@ async def test_confirm_user_expired_token(async_client: AsyncClient, mocker):
 
 @pytest.mark.anyio
 async def test_register_existing_user(async_client: AsyncClient, registered_user):
-    response = await register_user(async_client, registered_user['email'],"1234")
+    response = await register_user(async_client, registered_user['email'],register_user['password'])
     assert response.status_code == 400
     assert "already exists" in response.json()['detail']
 

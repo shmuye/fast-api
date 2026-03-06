@@ -1,6 +1,6 @@
 import logging
 
-from fastapi import APIRouter, BackgroundTasks, HTTPException, Request
+from fastapi import APIRouter, BackgroundTasks, HTTPException, Request, status
 
 from api.database import database, user_table
 from api.models.user import UserIn
@@ -21,7 +21,7 @@ logger = logging.getLogger(__name__)
 async def register(user: UserIn, background_task: BackgroundTasks, request: Request):
     if await get_user(user.email):
         raise HTTPException (
-            status_code=400,
+            status_code=status.HTTP_400_BAD_REQUEST,
             detail="A user with that email already exists"
         )
     hashed_password = get_password_hash(user.password)

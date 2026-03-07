@@ -159,6 +159,12 @@ statements into a consistent, configurable order
 
 - sqlalchemy core integration
 
+***python-jose***
+
+- a python library that implements the Javascript Object signing and Encription(JOSE) 
+
+standards
+
 
 **sqlalchemy Metadata**
 

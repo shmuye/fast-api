@@ -34,3 +34,10 @@ FROM posts
 {"asctime": "2026-03-04T20:16:50", "msecs": 739.0, "levelname": "INFO", "correlation_id": "-", "name": "uvicorn.error", "lineno": 67, "message": "Waiting for application shutdown."}
 {"asctime": "2026-03-04T20:16:50", "msecs": 742.0, "levelname": "INFO", "correlation_id": "-", "name": "uvicorn.error", "lineno": 76, "message": "Application shutdown complete."}
 {"asctime": "2026-03-04T20:16:50", "msecs": 746.0, "levelname": "INFO", "correlation_id": "-", "name": "uvicorn.error", "lineno": 94, "message": "Finished server process [12841]", "color_message": "Finished server process [\u001b[36m%d\u001b[0m]"}
+{"asctime": "2026-03-07T19:10:23", "msecs": 979.0, "levelname": "INFO", "correlation_id": "-", "name": "api.main", "lineno": 19, "message": "Hello world"}
+{"asctime": "2026-03-07T19:10:23", "msecs": 984.0, "levelname": "INFO", "correlation_id": "-", "name": "uvicorn.error", "lineno": 62, "message": "Application startup complete."}
+{"asctime": "2026-03-07T19:10:23", "msecs": 987.0, "levelname": "INFO", "correlation_id": "-", "name": "uvicorn.error", "lineno": 216, "message": "Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)", "color_message": "Uvicorn running on \u001b[1m%s://%s:%d\u001b[0m (Press CTRL+C to quit)"}
+{"asctime": "2026-03-07T19:10:27", "msecs": 600.0, "levelname": "INFO", "correlation_id": "-", "name": "uvicorn.error", "lineno": 264, "message": "Shutting down"}
+{"asctime": "2026-03-07T19:10:27", "msecs": 703.0, "levelname": "INFO", "correlation_id": "-", "name": "uvicorn.error", "lineno": 67, "message": "Waiting for application shutdown."}
+{"asctime": "2026-03-07T19:10:27", "msecs": 705.0, "levelname": "INFO", "correlation_id": "-", "name": "uvicorn.error", "lineno": 76, "message": "Application shutdown complete."}
+{"asctime": "2026-03-07T19:10:27", "msecs": 707.0, "levelname": "INFO", "correlation_id": "-", "name": "uvicorn.error", "lineno": 94, "message": "Finished server process [12178]", "color_message": "Finished server process [\u001b[36m%d\u001b[0m]"}

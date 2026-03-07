@@ -20,7 +20,7 @@ def anyio_backend():
 def client()-> Generator:
     yield TestClient(app)
 
-@pytest.fixture(autouse=True)
+@pytest.fixture()
 async def db()-> AsyncGenerator:
     await database.connect()
     yield

@@ -31,7 +31,7 @@ def test_get_subject_for_token_type_valid_confirmation():
 
 def test_get_subject_for_token_type_valid_access():
     email = "test@gmail.com"
-    token = security.create_confirmation_token(email)
+    token = security.create_access_token(email)
     assert security.get_subject_for_token_type(token, "access") == email
 
 def test_get_subject_for_token_type_expired_token(mocker):

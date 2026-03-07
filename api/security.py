@@ -7,11 +7,12 @@ from fastapi.security import OAuth2PasswordBearer
 from jose import ExpiredSignatureError, JWTError, jwt
 from passlib.context import CryptContext
 
+from api.config import config
 from api.database import database, user_table
 
 logger = logging.getLogger(__name__)
 
-SECRET_KEY = "1687279dcea2670abec685e93d478671"
+SECRET_KEY = config.SECRET_KEY
 ALGORITHM = 'HS256'
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl='token')
 
@@ -107,7 +108,7 @@ async def authenticate_user(email: str, password: str):
         raise create_credentials_exception("User not found")
     if not verify_password(password, user.password):
         raise create_credentials_exception("Incorrect email or password")
-    if(not user.Confirmed):
+    if(not user.confirmed):
         raise create_credentials_exception("user has not confirmed email")
     return user
 

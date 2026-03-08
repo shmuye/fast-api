@@ -41,7 +41,7 @@ async def register(user: UserIn, background_task: BackgroundTasks, request: Requ
 async def login(user: UserIn):
     user = await authenticate_user(user.email, user.password)
     access_token = create_access_token(user.email)
-    return {"accessToken": access_token, "token_type": "bearer"}
+    return {"access_token": access_token, "token_type": "bearer"}
 
 @router.get('/confirm/{token}')
 async def confirm_email(token: str):

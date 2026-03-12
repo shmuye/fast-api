@@ -30,7 +30,7 @@ async def find_post(post_id: int):
     return await database.fetch_one(query)
 
 @router.post('/', response_model=UserPost, status_code=201)
-async def createPost(post: UserPostIn, current_user: Annotated[User, get_current_user ]):
+async def createPost(post: UserPostIn, current_user: Annotated[User, Depends(get_current_user) ]):
        
     
     data = {**post.model_dump(), "user_id": current_user.id}
@@ -63,7 +63,7 @@ async def get_all_posts(sorting: PostSorting = PostSorting.newest):
 
 
 @router.post('/comment', response_model=Comment, status_code=201)
-async def createComment(comment:CommentIn, current_user: Annotated[User, get_current_user]):
+async def createComment(comment:CommentIn, current_user: Annotated[User, Depends(get_current_user)]):
     
     post = await find_post(comment.post_id)
     

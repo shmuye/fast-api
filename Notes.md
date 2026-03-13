@@ -1,5 +1,8 @@
 ## Python concepts
 
+**:=**(walrus operator)
+
+- It assigns a value to a variable and returns that value at the same time.
 
 **Decorator**
 

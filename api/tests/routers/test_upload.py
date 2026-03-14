@@ -3,6 +3,7 @@ import pathlib
 from fileinput import filename
 
 import pytest
+from httpx import AsyncClient
 
 
 @pytest.fixture()
@@ -30,3 +31,20 @@ def aiofiles_mock_open(mocker, fs):
 
         mock_open.side_effect = async_file_open
         return mock_open
+
+async def call_upload_endpoint(
+        async_client: AsyncClient, token: str, sample_image: pathlib.Path
+):
+    await async_client.post(
+        '/upload',
+        files={"file": open(sample_image, 'rb')},
+        headers={"Authorization": f"Beares {token}"}
+        )
+    
+@pytest.mark.anyio
+async def test_upload_image(
+    async_client: AsyncClient, logged_in_token: str, sample_image: pathlib.Path
+):
+    response = await call_upload_endpoint(async_client, logged_in_token, sample_image)
+    assert response.status_code == 201
+    assert response.json()['file_url'] == "https://fakeurl.com"

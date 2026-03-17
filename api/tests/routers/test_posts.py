@@ -58,7 +58,12 @@ async def test_create_post(async_client: AsyncClient, confirmed_user: dict, logg
         )
 
     assert response.status_code == 201
-    assert { "id": 1, "body": body, 'user_id': confirmed_user['id']}.items() <= response.json().items()
+    assert { 
+        "id": 1, 
+        "body": body, 
+        'user_id': confirmed_user['id'],
+        'image_url': None
+        }.items() <= response.json().items()
 
 @pytest.mark.anyio
 async def test_like_post(async_client: AsyncClient, created_post: dict, logged_in_token: str, registered_user: dict):

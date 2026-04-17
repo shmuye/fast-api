@@ -6,11 +6,17 @@ import pytest
 from fastapi.testclient import TestClient
 from httpx import ASGITransport, AsyncClient, Request, Response
 
+from api.tests.helpers import create_post
+
 os.environ['ENV_STATE'] = "test"
 
 from api.database import database, user_table # noqa = E042
 from api.main import app # noqa = E402
 
+
+@pytest.fixture()
+async def created_post(async_client: AsyncClient, logged_in_token: str):
+    return await create_post('Test Post', async_client, logged_in_token)
 
 @pytest.fixture(scope='session')
 def anyio_backend():
@@ -40,6 +46,8 @@ async def registered_user(async_client: AsyncClient) -> dict:
     user = await database.fetch_one(query)
     user_details['id'] = user.id
     return user_details
+
+
 
 @pytest.fixture()
 async def confirmed_user(registered_user: dict) -> dict:

@@ -59,3 +59,6 @@ FROM posts
 {"asctime": "2026-03-12T22:30:54", "msecs": 885.0, "levelname": "INFO", "correlation_id": "-", "name": "uvicorn.error", "lineno": 67, "message": "Waiting for application shutdown."}
 {"asctime": "2026-03-12T22:30:54", "msecs": 889.0, "levelname": "INFO", "correlation_id": "-", "name": "uvicorn.error", "lineno": 76, "message": "Application shutdown complete."}
 {"asctime": "2026-03-12T22:30:54", "msecs": 892.0, "levelname": "INFO", "correlation_id": "-", "name": "uvicorn.error", "lineno": 94, "message": "Finished server process [35215]", "color_message": "Finished server process [\u001b[36m%d\u001b[0m]"}
+{"asctime": "2026-04-17T19:51:34", "msecs": 270.0, "levelname": "INFO", "correlation_id": "-", "name": "api.main", "lineno": 20, "message": "Hello world"}
+{"asctime": "2026-04-17T19:51:34", "msecs": 274.0, "levelname": "INFO", "correlation_id": "-", "name": "uvicorn.error", "lineno": 62, "message": "Application startup complete."}
+{"asctime": "2026-04-17T19:51:34", "msecs": 275.0, "levelname": "INFO", "correlation_id": "-", "name": "uvicorn.error", "lineno": 224, "message": "Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)", "color_message": "Uvicorn running on \u001b[1m%s://%s:%d\u001b[0m (Press CTRL+C to quit)"}
